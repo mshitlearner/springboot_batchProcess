@@ -1,0 +1,13 @@
+package in.mahesh;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringbootBatchProcessingApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringbootBatchProcessingApplication.class, args);
+	}
+
+}
