@@ -1,4 +1,4 @@
-package in.mahesh.policies;
+package in.mshitlearner.policies;
 
 import org.springframework.batch.core.step.skip.SkipLimitExceededException;
 import org.springframework.batch.core.step.skip.SkipPolicy;

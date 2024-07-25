@@ -1,8 +1,8 @@
-package in.mahesh.processor;
+package in.mshitlearner.processor;
 
 import org.springframework.batch.item.ItemProcessor;
 
-import in.mahesh.entity.Customer;
+import in.mshitlearner.entity.Customer;
 
 public class CustomerProcessor implements ItemProcessor<Customer, Customer>{
 	

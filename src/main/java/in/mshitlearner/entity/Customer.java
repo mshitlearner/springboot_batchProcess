@@ -1,4 +1,4 @@
-package in.mahesh.entity;
+package in.mshitlearner.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

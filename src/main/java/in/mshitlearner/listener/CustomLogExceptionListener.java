@@ -1,10 +1,12 @@
-package in.mahesh.listener;
+package in.mshitlearner.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.SkipListener;
 
-import in.mahesh.entity.Customer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import in.mshitlearner.entity.Customer;
 import lombok.SneakyThrows;
 
 public class CustomLogExceptionListener implements SkipListener<Customer, Number> {

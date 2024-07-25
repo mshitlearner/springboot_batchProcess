@@ -1,6 +1,4 @@
-package in.mahesh.config;
-
-import java.security.Policy;
+package in.mshitlearner.config;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.SkipListener;
@@ -24,11 +22,11 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import in.mahesh.entity.Customer;
-import in.mahesh.listener.CustomLogExceptionListener;
-import in.mahesh.policies.CustomSkipPolicy;
-import in.mahesh.processor.CustomerProcessor;
-import in.mahesh.respository.CustomerRepository;
+import in.mshitlearner.entity.Customer;
+import in.mshitlearner.listener.CustomLogExceptionListener;
+import in.mshitlearner.policies.CustomSkipPolicy;
+import in.mshitlearner.processor.CustomerProcessor;
+import in.mshitlearner.respository.CustomerRepository;
 import lombok.AllArgsConstructor;
 
 @Configuration
