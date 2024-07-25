@@ -12,7 +12,7 @@
 	<artifactId>springboot_batchProcessing</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>springboot_batchProcessing</name>
-	<description>Demo project for Spring Boot Batch Processing</description>
+	<description>Demo project for Spring Boot Batch Processing With Multiple Thread with out partition</description>
 	<url/>
 	<licenses>
 		<license/>
