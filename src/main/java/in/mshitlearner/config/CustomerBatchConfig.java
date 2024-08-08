@@ -1,5 +1,9 @@
 package in.mshitlearner.config;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.SkipListener;
 import org.springframework.batch.core.Step;
@@ -17,7 +21,9 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -38,26 +44,40 @@ public class CustomerBatchConfig {
 	// Item Reader Process
 	@Bean
 	@StepScope
-	public FlatFileItemReader<Customer> reader(@Value("#{jobParameters[fileName]}") String pathToFIle) {
+	public FlatFileItemReader<Customer> reader(@Value("#{jobParameters[fileName]}") String pathToFIle) throws Exception {
 		FlatFileItemReader<Customer> itemReader = new FlatFileItemReader<Customer>();
+		
+		
 		itemReader.setResource(new FileSystemResource(pathToFIle));
 		itemReader.setName("csvItemReader");
 		itemReader.setLinesToSkip(1);
-		itemReader.setLineMapper(lineMapper());
+		String headerLine= generateHeaderNames(pathToFIle);
+		itemReader.setLineMapper(lineMapper(headerLine));
 		return itemReader;
 	}
+	
+	private String generateHeaderNames(String pathToFile) throws Exception{
+		Resource resource = new ClassPathResource(pathToFile);
+        BufferedReader readerHeader = new BufferedReader(
+                new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
 
-	private LineMapper<Customer> lineMapper() {
+        String headerLine = readerHeader.readLine();
+        readerHeader.close();        
+        return headerLine;
+	}
+	
+	private LineMapper<Customer> lineMapper(String headerLine) {
 		DefaultLineMapper<Customer> defaultLineMapper = new DefaultLineMapper<Customer>();
 
 		// Reading the from CSV file which are comma seperated fields
 		DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
 		lineTokenizer.setDelimiter(",");
 		lineTokenizer.setStrict(false);
-		lineTokenizer.setNames("index", "customer_id", "firstName", "lastName", "company", "city", "country", "phone_1",
-				"phone_2", "email", "subscriptionDate", "website");
-
-		// Mapp the CSV file to the Customer Object
+		//lineTokenizer.setNames("index", "customer_id", "firstName", "lastName", "company", "city", "country", "phone_1",
+		//		"phone_2", "email", "subscriptionDate", "website");
+		 String[] headerNames = headerLine.split(",");
+		 lineTokenizer.setNames(headerNames);
+		// Map the CSV file to the Customer Object
 		BeanWrapperFieldSetMapper<Customer> fieldSetMapper = new BeanWrapperFieldSetMapper<Customer>();
 		fieldSetMapper.setTargetType(Customer.class);
 
